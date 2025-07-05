@@ -1,4 +1,9 @@
-
 # Environment parameters for the candy button environment
 candy_button_delay: 10
 reward_schedule: 'constant'
+
+# Chemoattraction environment parameters
+stimulus_location: [75, 75]
+initial_position: [25, 25]
+movement_speed: 1.0 # Increased movement speed
+rotation_scale: 0.2 # Increased rotation scale

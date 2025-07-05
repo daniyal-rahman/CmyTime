@@ -1,0 +1,4 @@
+
+# Environment parameters for the candy button environment
+candy_button_delay: 10
+reward_schedule: 'constant'

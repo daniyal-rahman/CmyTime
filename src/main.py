@@ -1,4 +1,3 @@
-
 import yaml
 from src.connectome.loader import load_connectome
 from src.models.lif_neuron import LIFNeuron
@@ -10,7 +9,7 @@ def main():
     with open("configs/default_hparams.yaml", 'r') as f:
         hparams = yaml.safe_load(f)
 
-    adj_chemical, _, neuron_to_idx = load_connectome("data/raw/celegans_connectome.json")
+    adj_chemical, adj_electrical, neuron_to_idx = load_connectome("data/processed")
     neurons = [LIFNeuron() for _ in range(len(neuron_to_idx))]
     stdp = STDP(**hparams)
     engine = Engine(adj_chemical, neurons, stdp)

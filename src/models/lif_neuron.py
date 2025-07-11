@@ -3,7 +3,7 @@ from .neuron import Neuron
 import numpy as np
 
 class LIFNeuron(Neuron):
-    def __init__(self, tau=20.0, threshold=-40.0, reset_potential=-75.0, initial_potential=-50.0):
+    def __init__(self, tau=30.0, threshold=-30.0, reset_potential=-50.0, initial_potential=-20.0):
         super().__init__(initial_potential=initial_potential)
         self.tau = tau
         self.threshold = threshold
@@ -14,7 +14,7 @@ class LIFNeuron(Neuron):
         self.membrane_potential += (-self.membrane_potential + input_current) / self.tau
         if self.membrane_potential >= self.threshold:
             self.membrane_potential = self.reset_potential
-            self.last_spike_time = current_time
-            # print(f"Neuron spiked at time {current_time}") # Debugging: print when a neuron spikes
+            self.last_spike_time = current_time + np.random.uniform(-0.1, 0.1)
+            # print(f"Neuron {id(self)} spiked at time {current_time}") # Debugging: print when a neuron spikes
             return 1.0  # Spike
         return 0.0

@@ -18,11 +18,6 @@ class STDP:
         weights_lil = weights.tolil()
         rows, cols = weights.nonzero()
 
-        # Dynamic adjustment of A_plus and A_minus based on reward
-        reward_factor = 1.0 + reward * 0.0001 # Small scaling factor for reward
-        current_a_plus = self.a_plus * reward_factor
-        current_a_minus = self.a_minus * reward_factor
-
         updated_connections_count = 0
 
         for r, c in zip(rows, cols):
@@ -35,9 +30,9 @@ class STDP:
 
                 delta_w = 0
                 if delta_t > 0:  # Potentiation
-                    delta_w = current_a_plus * np.exp(-delta_t / self.tau_plus)
+                    delta_w = self.a_plus * np.exp(-delta_t / self.tau_plus)
                 elif delta_t < 0: # Depression
-                    delta_w = -current_a_minus * np.exp(delta_t / self.tau_minus)
+                    delta_w = -self.a_minus * np.exp(delta_t / self.tau_minus)
 
                 # Reward modulation
                 if reward > self.reward_threshold:
@@ -57,11 +52,10 @@ class STDP:
                 weights_lil[r, c] = np.clip(new_weight, self.w_min, self.w_max) # Apply clipping
                 updated_connections_count += 1
 
-                # Log for any updated connection (first 10 updates per step)
-                if updated_connections_count <= 10:
-                    print(f"STDP Update - Time: {current_time}, Conn: ({r},{c}), delta_t: {delta_t:.2f}, delta_w: {delta_w:.4f}, Old Weight: {weights_lil[r,c]:.4f}, New Weight: {new_weight:.4f}")
+                if updated_connections_count <= 5 and current_time % 10 == 0:
+                    print(f"STDP: t={current_time},c=({r},{c}),dt={delta_t:.1f},dw={delta_w:.3f},w={new_weight:.3f},reward={reward:.3f}")
 
         if updated_connections_count > 0:
-            print(f"Total STDP updates this step: {updated_connections_count}")
+            pass
 
         return weights_lil.tocsr()

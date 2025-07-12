@@ -1,11 +1,11 @@
 
 # Hyperparameters for STDP
-learning_rate: 0.001 # Further reduced learning rate
-tau_plus: 10.0 # Increased time window for potentiation
-tau_minus: 10.0 # Increased time window for depression
-a_plus: 0.001 # Further reduced amplitude for potentiation
-a_minus: 0.001 # Further reduced amplitude for depression
+learning_rate: 0.05 # Increased learning rate
+tau_plus: 20.0 # Increased time window for potentiation
+tau_minus: 20.0 # Increased time window for depression
+a_plus: 0.2 # Increased potentiation factor
+a_minus: 0.2 # Increased depression factor
 w_min: 0.0 # Minimum weight
 w_max: 1.0 # Maximum weight
 reward_threshold: 0.0 # Reset reward threshold
-reward_strength: 0.001 # Very small reward modulation
+reward_strength: 0.1 # Increased reward modulation

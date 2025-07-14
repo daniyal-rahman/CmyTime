@@ -14,9 +14,9 @@ class TrappedChemoattractionEnv(BaseEnv):
         self.rotation_scale = rotation_scale
 
         self.traps = [
-            {'location': np.array([50, 50]), 'radius': 10, 'penalty': -10.0},
-            {'location': np.array([25, 75]), 'radius': 10, 'penalty': -10.0},
-            {'location': np.array([75, 25]), 'radius': 10, 'penalty': -10.0},
+            {'location': np.array([50, 50]), 'radius': 10, 'penalty': -50.0},
+            {'location': np.array([25, 75]), 'radius': 10, 'penalty': -50.0},
+            {'location': np.array([75, 25]), 'radius': 10, 'penalty': -50.0},
         ]
 
         self.action_space = spaces.Box(low=np.array([-1, -1, 0]), high=np.array([1, 1, 1]), dtype=np.float32)

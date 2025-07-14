@@ -53,7 +53,7 @@ project-root/
 
 *   **`src/brains/base_brain.py`**: Defines the `BaseBrain` abstract class.
 *   **`src/brains/static_brain.py`**: Implements a static brain model that can navigate towards a stimulus.
-*   **`src/brains/learning_brain.py`**: Implements a brain with a learning mechanism (currently under development).
+*   **`src/brains/learning_brain.py`**: Implements a brain with learning capabilities, now fully integrating `LIFNeuron` models for neural dynamics and STDP-based weight updates.
 
 ### `src/core/`
 

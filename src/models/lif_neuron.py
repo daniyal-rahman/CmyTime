@@ -9,12 +9,14 @@ class LIFNeuron(Neuron):
         self.threshold = threshold
         self.reset_potential = reset_potential
         self.last_spike_time = -np.inf # Initialize with a very old spike time
+        self.spike_output = 0.0 # Initialize spike output
 
     def step(self, input_current, current_time):
         self.membrane_potential += (-self.membrane_potential + input_current) / self.tau
         if self.membrane_potential >= self.threshold:
             self.membrane_potential = self.reset_potential
             self.last_spike_time = current_time + np.random.uniform(-0.1, 0.1)
-            # print(f"Neuron {id(self)} spiked at time {current_time}, potential: {self.membrane_potential:.2f}, input: {input_current:.2f}") # Debugging: print when a neuron spikes
+            self.spike_output = 1.0 # Set spike output to 1.0
             return 1.0  # Spike
+        self.spike_output = 0.0 # No spike
         return 0.0

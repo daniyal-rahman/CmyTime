@@ -6,7 +6,7 @@ from src.core.base_env import BaseEnv
 
 
 class ChemoattractionEnv(BaseEnv):
-    def __init__(self, stimulus_location=(100, 100), initial_position=(0, 0), initial_angle=0.0, movement_speed=10.0, rotation_scale=1.0):
+    def __init__(self, stimulus_location=(100, 100), initial_position=(0, 0), initial_angle=0.0, movement_speed=1.0, rotation_scale=0.1):
         super(ChemoattractionEnv, self).__init__()
         self.stimulus_location = np.array(stimulus_location, dtype=np.float32)
         self.initial_position = np.array(initial_position, dtype=np.float32)
@@ -14,7 +14,9 @@ class ChemoattractionEnv(BaseEnv):
         self.movement_speed = movement_speed
         self.rotation_scale = rotation_scale
 
-        self.action_space = spaces.Box(low=np.array([-1, -1, 0]), high=np.array([1, 1, 1]), dtype=np.float32)
+        # Action space is now [dorsal_activation, ventral_activation]
+        self.action_space = spaces.Box(low=0, high=1, shape=(2,), dtype=np.float32)
+        
         self.observation_space = spaces.Dict({
             'current_position': spaces.Box(low=-np.inf, high=np.inf, shape=(2,), dtype=np.float32),
             'stimulus_location': spaces.Box(low=-np.inf, high=np.inf, shape=(2,), dtype=np.float32),
@@ -33,11 +35,18 @@ class ChemoattractionEnv(BaseEnv):
         return self._get_obs(), self._get_info()
 
     def step(self, action):
-        turn_left, turn_right, move_forward = action
+        # Action is now [dorsal_activation, ventral_activation]
+        dorsal_activation, ventral_activation = action
 
-        self.current_angle += (turn_left - turn_right) * self.rotation_scale
-        delta_x = move_forward * self.movement_speed * np.cos(self.current_angle)
-        delta_y = move_forward * self.movement_speed * np.sin(self.current_angle)
+        # Turning is proportional to the difference in muscle activation
+        turn = (dorsal_activation - ventral_activation) * self.rotation_scale
+        self.current_angle += turn
+
+        # Forward movement is proportional to the sum of muscle activation
+        move_forward = (dorsal_activation + ventral_activation) / 2.0 * self.movement_speed
+        
+        delta_x = move_forward * np.cos(self.current_angle)
+        delta_y = move_forward * np.sin(self.current_angle)
         self.current_position += np.array([delta_x, delta_y])
 
         self.positions_history.append(self.current_position.copy())

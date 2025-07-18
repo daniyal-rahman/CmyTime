@@ -1,6 +1,6 @@
 # Codebase Overview
 
-This document provides an overview of the files and their functionalities within the `CmyTime` project, reflecting the recent refactoring to a modular, agent-centric architecture.
+This document provides an overview of the files and their functionalities within the `CmyTime` project, reflecting the recent refactoring to a modular, agent-centric architecture with a biologically-plausible movement model.
 
 ## Project Structure
 
@@ -28,7 +28,7 @@ project-root/
 │   └── main.py                   # Main entry point for running simulations
 ├── scripts/                      # Utility scripts
 ├── tests/                        # Unit tests for various components
-├── Dockerfile                    # Dockerfile for reproducible environment setup
+├─�� Dockerfile                    # Dockerfile for reproducible environment setup
 ├── requirements.txt              # Python dependency list
 ├── README.md                     # Project README
 ├── pytest.ini                    # Pytest configuration
@@ -40,33 +40,22 @@ project-root/
 
 ## File Descriptions
 
-### `data/`
-
-*   **`data/raw/`**: Contains the C. elegans connectome data from the OpenWorm project.
-
-### `configs/`
-
-*   **`configs/default_hparams.yaml`**: Hyperparameters for the simulation.
-*   **`configs/env_params.yaml`**: Environment parameters.
-
 ### `src/brains/`
 
+The brain components are responsible for processing observations and generating actions. They now model the C. elegans nervous system by mapping sensory input to motor neuron activations.
+
 *   **`src/brains/base_brain.py`**: Defines the `BaseBrain` abstract class.
-*   **`src/brains/static_brain.py`**: Implements a static brain model that can navigate towards a stimulus.
-*   **`src/brains/learning_brain.py`**: Implements a brain with learning capabilities, now fully integrating `LIFNeuron` models for neural dynamics and STDP-based weight updates.
-
-### `src/core/`
-
-*   **`src/core/agent.py`**: The `Agent` class, which combines a brain and a body.
-*   **`src/core/body.py`**: The `Body` class, which holds the agent's physical state.
-*   **`src/core/base_env.py`**: Defines the `BaseEnv` abstract class, compliant with the Gymnasium API.
-*   **`src/core/simulator.py`**: The `Simulator` class, which manages the simulation loop and calls the brain's learning rule.
+*   **`src/brains/static_brain.py`**: Implements a brain with a fixed-synapse connectome. It generates actions by propagating sensory input through the network to dorsal and ventral motor neuron groups.
+*   **`src/brains/learning_brain.py`**: Implements a brain with plastic synapses. It uses `LIFNeuron` models for neural dynamics and an STDP-based learning rule to modify weights. Actions are generated from the membrane potentials of the dorsal and ventral motor neurons.
 
 ### `src/environments/`
 
+The environment components define the simulation world and its physics. The action space for all environments has been refactored to be more biologically plausible.
+
+*   **Action Space**: The action is a 2-element array `[dorsal_activation, ventral_activation]`, where each value is between 0 and 1.
+*   **Movement Logic**:
+    *   **Turning**: Proportional to the *difference* between dorsal and ventral activations (`dorsal - ventral`).
+    *   **Forward Movement**: Proportional to the *sum* of dorsal and ventral activations (`dorsal + ventral`).
+
 *   **`src/environments/chemoattraction_env.py`**: A simple environment with a single food source.
 *   **`src/environments/trapped_chemoattraction_env.py`**: A more complex environment with a food source and traps to avoid.
-
-### `src/main.py`
-
-*   **`src/main.py`**: The main entry point for running simulations. It uses `argparse` to allow for selecting different brains and environments.

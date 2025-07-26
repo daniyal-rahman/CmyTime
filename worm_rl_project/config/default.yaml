@@ -1,0 +1,20 @@
+# All time units are in seconds (s)
+neural_sim_settings:
+    dt: 0.0001  # Timestep for neural simulation (0.1 ms)
+    duration: 1.0  # Total simulation duration for one run
+    parameter_set: C # Using parameter set C for graded potentials
+
+physics_sim_settings:
+    timestep: 0.001 # Timestep for physics simulation (1 ms)
+    viscosity: 1.0
+
+rl_hyperparameters:
+    env: worm
+    algorithm: PPO
+    network_size: [64, 64]
+    learning_rate: 0.0003
+
+file_paths:
+    # Path to the LEMS simulation file, which includes the NeuroML network
+    lems_file: "examples/LEMS_c302_C_Muscles.xml"
+    model_checkpoints: models/

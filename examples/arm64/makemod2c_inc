@@ -1,0 +1,56 @@
+./generic_muscle_iaf_cell.c: ../generic_muscle_iaf_cell.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "generic_muscle_iaf_cell.mod" -o "/Users/danirahman/Repos/CmyTime/examples/arm64")
+
+./generic_muscle_iaf_cell.o: ./generic_muscle_iaf_cell.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./generic_neuron_iaf_cell.c: ../generic_neuron_iaf_cell.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "generic_neuron_iaf_cell.mod" -o "/Users/danirahman/Repos/CmyTime/examples/arm64")
+
+./generic_neuron_iaf_cell.o: ./generic_neuron_iaf_cell.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./neuron_to_muscle_exc_syn.c: ../neuron_to_muscle_exc_syn.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "neuron_to_muscle_exc_syn.mod" -o "/Users/danirahman/Repos/CmyTime/examples/arm64")
+
+./neuron_to_muscle_exc_syn.o: ./neuron_to_muscle_exc_syn.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./neuron_to_muscle_inh_syn.c: ../neuron_to_muscle_inh_syn.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "neuron_to_muscle_inh_syn.mod" -o "/Users/danirahman/Repos/CmyTime/examples/arm64")
+
+./neuron_to_muscle_inh_syn.o: ./neuron_to_muscle_inh_syn.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./neuron_to_neuron_elec_syn.c: ../neuron_to_neuron_elec_syn.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "neuron_to_neuron_elec_syn.mod" -o "/Users/danirahman/Repos/CmyTime/examples/arm64")
+
+./neuron_to_neuron_elec_syn.o: ./neuron_to_neuron_elec_syn.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./neuron_to_neuron_exc_syn.c: ../neuron_to_neuron_exc_syn.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "neuron_to_neuron_exc_syn.mod" -o "/Users/danirahman/Repos/CmyTime/examples/arm64")
+
+./neuron_to_neuron_exc_syn.o: ./neuron_to_neuron_exc_syn.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
+./neuron_to_neuron_inh_syn.c: ../neuron_to_neuron_inh_syn.mod
+	@printf " -> $(C_GREEN)NMODL$(C_RESET) $<\\n"
+	(cd "..";  MODLUNIT=$(NRNUNITS) $(NOCMODL) "neuron_to_neuron_inh_syn.mod" -o "/Users/danirahman/Repos/CmyTime/examples/arm64")
+
+./neuron_to_neuron_inh_syn.o: ./neuron_to_neuron_inh_syn.c
+	@printf " -> $(C_GREEN)Compiling$(C_RESET) $<\\n"
+	$(COMPILE) -I".." $(INCLUDES) -fPIC -c $< -o $@
+
